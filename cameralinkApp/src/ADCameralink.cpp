@@ -672,16 +672,15 @@ void ADCameralink::oneLoopImage(void) {
     imemsize = imemsize >> 20;
 
     setIntegerParam(cor_nd_datasize, imemsize);
-    setIntegerParam(cor_max_ndbuffers, this->pNDArrayPool->maxBuffers());
-    setIntegerParam(cor_num_ndbuffers, this->pNDArrayPool->numBuffers());
-    memsize = this->pNDArrayPool->maxMemory();
+    setIntegerParam(cor_num_ndbuffers, this->pNDArrayPool->getNumBuffers());
+    memsize = this->pNDArrayPool->getMaxMemory();
     memsize = memsize >> 20;
 
     setIntegerParam(cor_max_ndmemory, (int)memsize);
-    memsize = this->pNDArrayPool->memorySize();
+    memsize = this->pNDArrayPool->getMemorySize();
     memsize = memsize >> 20;
     setIntegerParam(cor_alloc_ndmemory, (int)memsize);
-    setIntegerParam(cor_free_ndbuffers, this->pNDArrayPool->numFree());
+    setIntegerParam(cor_free_ndbuffers, this->pNDArrayPool->getNumFree());
 
     if (getIntParam(cor_nd_datasize) > 0) {
       setIntegerParam(
@@ -787,13 +786,12 @@ void ADCameralink::oneLoopImage(void) {
         cm = this->pImage->pData;
 
         setIntegerParam(cor_nd_datasize, (this->pImage->dataSize) >> 20);
-        setIntegerParam(cor_max_ndbuffers, array_pool->maxBuffers());
-        setIntegerParam(cor_num_ndbuffers, array_pool->numBuffers());
+        setIntegerParam(cor_num_ndbuffers, array_pool->getNumBuffers());
         setIntegerParam(cor_max_ndmemory,
-                        (int)((array_pool->maxMemory()) >> 20));
+                        (int)((array_pool->getMaxMemory()) >> 20));
         setIntegerParam(cor_alloc_ndmemory,
-                        (int)((array_pool->memorySize()) >> 20));
-        setIntegerParam(cor_free_ndbuffers, array_pool->numFree());
+                        (int)((array_pool->getMemorySize()) >> 20));
+        setIntegerParam(cor_free_ndbuffers, array_pool->getNumFree());
         if (getIntParam(cor_nd_datasize) != 0) {
           setIntegerParam(cor_est_buffers_left,
                           getIntParam(cor_free_ndbuffers) +
